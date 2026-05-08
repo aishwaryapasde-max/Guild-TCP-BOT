@@ -1,22 +1,30 @@
-name: Unzip LEVEL-UP
+name: Unzip and Commit to Repo
 
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch: # Allows you to run it manually
+  workflow_dispatch:
 
 jobs:
-  unzip-process:
+  unzip-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Crucial: Allows the bot to push changes
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Extract LEVEL-UP.zip
         run: |
-          mkdir -p ./extracted_content
-          unzip -o LEVEL-UP.zip -d ./extracted_content/
+          # Extract directly to root so files are visible in the repo
+          unzip -o LEVEL-UP.zip -d .
 
-      - name: Verify extraction
-        run: ls -R ./extracted_content/
-        
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          # Only commit if there are actually changes to avoid errors
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-extract LEVEL-UP.zip contents"
+          git push
+          
