@@ -10,3 +10,5 @@ pytz
 aiohttp
 cfonts
 google-play-scraper
+Flask
+gunicorn
