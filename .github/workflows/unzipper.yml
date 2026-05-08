@@ -1,4 +1,4 @@
-# Configuration for unzipping LEVEL-UP.zip
+name : "unzipper"
 archive:
   name: "LEVEL-UP.zip"
   source_path: "./LEVEL-UP.zip"
