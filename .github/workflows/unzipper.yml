@@ -1,0 +1,17 @@
+# Configuration for unzipping LEVEL-UP.zip
+archive:
+  name: "LEVEL-UP.zip"
+  source_path: "./LEVEL-UP.zip"
+  destination: "./extracted_content/"
+  options:
+    overwrite: true
+    keep_original: true
+    flatten: false
+
+# Example for automation tools like Ansible
+- name: Unarchive LEVEL-UP.zip
+  ansible.builtin.unarchive:
+    src: "./LEVEL-UP.zip"
+    dest: "./target_folder"
+    remote_src: no
+    
