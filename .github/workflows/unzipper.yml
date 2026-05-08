@@ -1,17 +1,22 @@
-name : "unzipper"
-archive:
-  name: "LEVEL-UP.zip"
-  source_path: "./LEVEL-UP.zip"
-  destination: "./extracted_content/"
-  options:
-    overwrite: true
-    keep_original: true
-    flatten: false
+name: Unzip LEVEL-UP
 
-# Example for automation tools like Ansible
-- name: Unarchive LEVEL-UP.zip
-  ansible.builtin.unarchive:
-    src: "./LEVEL-UP.zip"
-    dest: "./target_folder"
-    remote_src: no
-    
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows you to run it manually
+
+jobs:
+  unzip-process:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract LEVEL-UP.zip
+        run: |
+          mkdir -p ./extracted_content
+          unzip -o LEVEL-UP.zip -d ./extracted_content/
+
+      - name: Verify extraction
+        run: ls -R ./extracted_content/
+        
